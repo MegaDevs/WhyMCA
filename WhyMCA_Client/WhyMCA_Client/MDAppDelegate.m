@@ -10,11 +10,13 @@
 
 #import "MDMasterViewController.h"
 #import "StackMob.h"
+#import "Constants.h"
 
 @implementation MDAppDelegate
 
 @synthesize window = _window;
 @synthesize navigationController = _navigationController;
+@synthesize masterViewController = _masterViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -22,9 +24,16 @@
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-
-    MDMasterViewController *masterViewController = [[MDMasterViewController alloc] initWithNibName:@"MDMasterViewController" bundle:nil];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    
+    // Get theft id
+    NSString *theftId = [[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] 
+                         objectForKey:kMDUserDefaultTheftId];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:theftId forKey:kMDUserDefaultTheftId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    self.masterViewController = [[MDMasterViewController alloc] initWithNibName:@"MDMasterViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;
@@ -58,6 +67,7 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    self.masterViewController.theftId = [[NSUserDefaults standardUserDefaults] objectForKey:kMDUserDefaultTheftId];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -17,4 +17,7 @@
 // Table view
 #define kMDRowHeight 77
 
+// User defaults
+#define kMDUserDefaultTheftId @"theftId"
+
 #endif
