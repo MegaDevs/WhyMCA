@@ -22,7 +22,7 @@
 #define kMDURLTestPic4 @"http://profile.ak.fbcdn.net/hprofile-ak-ash2/50267_169644357111_1464048_n.jpg"
 
 // Table view
-#define kMDRowHeight 77
+#define kMDRowHeight 110
 
 // User defaults
 #define kMDUserDefaultTheftId @"theftId"

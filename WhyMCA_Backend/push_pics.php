@@ -27,10 +27,11 @@
         echo "Pic: ".$pic."<br/>";
         $thefile = base64_decode($pic);
         $img = imagecreatefromstring($thefile);
+        $imgRot = imagerotate($img, 90)
 
         //header('Content-Type: image/jpeg');
-        imagejpeg($img, $theftId."/".sha1($pic).".jpg");
-        imagedestroy($img);
+        imagejpeg($imgRot, $theftId."/".sha1($pic).".jpg");
+        imagedestroy($img); imagedestroy($imgRot);
 
         if(count($savedPics = dir_entries("./".$theftId."/")) >= 3) {
 
@@ -38,16 +39,10 @@
             $gif = new GifCreator(0, 2, array(-1, -1, -1), 600, 600);
 
             // Add each frame to the animation
-            $gif->addFrame(file_get_contents($theftId."/".$savedPics[0]), 200, true);
-            $gif->addFrame(file_get_contents($theftId."/".$savedPics[1]), 200, true);
-            $gif->addFrame(file_get_contents($theftId."/".$savedPics[2]), 200, true);
-            // Disposal set to 0 for this frame so that following frame becomes overlay
-            //$gif->addFrame(file_get_contents('images/5.jpg'), 200, true, 0, 0, 0);
-            // Overlay frame
-            //$gif->addFrame(file_get_contents('images/6.gif'), 200, false, 150, 150, 2, array(255, 255, 255));
+            $gif->addFrame(file_get_contents($theftId."/".$savedPics[0]), 150, true);
+            $gif->addFrame(file_get_contents($theftId."/".$savedPics[1]), 150, true);
+            $gif->addFrame(file_get_contents($theftId."/".$savedPics[2]), 150, true);
 
-            // Output the animated gif
-            //header('Content-type: image/gif');
             $fp = fopen($theftId."/theft.gif", 'w');
             fwrite($fp, $gif->getAnimation());
             fclose($fp);
