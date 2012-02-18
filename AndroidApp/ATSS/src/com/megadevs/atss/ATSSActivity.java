@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.android.future.usb.UsbAccessory;
+import com.android.future.usb.UsbManager;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -24,9 +27,9 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
-import com.android.future.usb.UsbAccessory;
-import com.android.future.usb.UsbManager;
+import android.widget.Toast;
 
 public class ATSSActivity extends CommonActivity implements Runnable{
 
@@ -48,12 +51,13 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	private SurfaceView previewSurface;
 	private Camera theCamera;
 	private boolean surfaceReady = false;
+	private boolean isActive = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		//ARDUINO
 		mUsbManager = UsbManager.getInstance(this);
 		mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(
@@ -70,33 +74,23 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		log = (TextView)findViewById(R.id.log);
 
 		enableControls(false);
-		
-		//DARIO
-		
-		if (false) {
-			Intent i = new Intent(this, FirstRunActivity.class);
-			startActivityForResult(i, ACTIVITY_SET_PIN);
-		} else {
-			previewSurface = (SurfaceView)findViewById(R.id.preview);
-			previewSurface.getHolder().addCallback(new Callback() {
-	
-				public void surfaceDestroyed(SurfaceHolder holder) {}
-	
-				public void surfaceCreated(final SurfaceHolder holder) {
-					surfaceReady = true;
-					if (theCamera == null) {
-						initCamera(holder);
-					}
+
+		previewSurface = (SurfaceView)findViewById(R.id.preview);
+		previewSurface.getHolder().addCallback(new Callback() {
+
+			public void surfaceDestroyed(SurfaceHolder holder) {}
+
+			public void surfaceCreated(final SurfaceHolder holder) {
+				surfaceReady = true;
+				if (theCamera == null) {
+					initCamera(holder);
 				}
-	
-				public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
-			});
-	
-			initNfc(getIntent());
-		}
-		
-	
-		
+			}
+
+			public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+		});
+
+		initNfc(getIntent());
 	}
 
 	//OK
@@ -143,18 +137,6 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		initNfc(intent);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		case ACTIVITY_SET_PIN:
-			if (resultCode == RESULT_OK) {
-				//TODO settato pin
-			}
-			break;
-		}
 	}
 
 	@Override
@@ -214,6 +196,28 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	}
 	
 	@Override
+	public void pinpadNumber(View v) {
+		super.pinpadNumber(v);
+		String text = ((TextView)findViewById(R.id.pinpad_text)).getText().toString();
+		if (text.length() == 4) {
+			if (text.equals(PrefMan.getPref(PREF_PIN))) {
+				activate();
+			} else {
+				((TextView)findViewById(R.id.pinpad_text)).setText("");
+				Toast.makeText(this, R.string.wrong_pin, Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+	
+	public void activate() {
+		isActive = true;
+		
+	}
+	
+	public void deactivate() {
+		isActive = false;
+	}
+
 	public void onDestroy() {
 		unregisterReceiver(mUsbReceiver);
 		super.onDestroy();
