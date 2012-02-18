@@ -22,6 +22,8 @@ import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PreviewCallback;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
@@ -507,5 +509,20 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 				Log.e(TAG, "write failed", e);
 			}
 		}
+	}
+	
+	
+	public void playAlarm(){
+        MediaPlayer mp = MediaPlayer.create(ATSSActivity.this, R.raw.alarm);   
+        mp.start();
+        mp.setOnCompletionListener(new OnCompletionListener() {
+
+            public void onCompletion(MediaPlayer mp) {
+                // TODO Auto-generated method stub
+                mp.release();
+            }
+
+        });
+		
 	}
 }

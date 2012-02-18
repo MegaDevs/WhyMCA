@@ -75,7 +75,6 @@
 								<string key="NSFrame">{{244, 4}, {68, 68}}</string>
 								<reference key="NSSuperview" ref="964450266"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -100,6 +99,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="964450266"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				<int key="IBUISelectionStyle">2</int>
 				<reference key="IBUIContentView" ref="964450266"/>
 				<string key="IBUIReuseIdentifier">MDGridTableViewCell</string>
 				<real value="77" key="IBUIRowHeight"/>

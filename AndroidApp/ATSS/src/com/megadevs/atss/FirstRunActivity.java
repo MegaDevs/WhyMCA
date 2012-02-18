@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +25,9 @@ public class FirstRunActivity extends CommonActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.first_run);
 
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		
 		((TextView)findViewById(R.id.pinpad_text)).setTransformationMethod(null);
 	}
 
@@ -38,17 +42,18 @@ public class FirstRunActivity extends CommonActivity {
 		.setCancelable(false)
 		.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				PrefMan.setPref(PrefMan.PREF_PIN, pin);
-				PrefMan.setPrefBool(PrefMan.PREF_PIN_SETTED, true);
+				Thread t = new Thread(new Runnable() {
+					
+					public void run() {
+						try {
+							initTwitter();
+						} catch (SocialNetworkNotFoundException e) {
+							Log.e("ATSS", "Unable to find TheTwitter object");
+						}
+					}
+				});
 				
-				Intent i = new Intent(FirstRunActivity.this, ATSSActivity.class);
-				startActivity(i);
-				FirstRunActivity.this.finish();
-//				try {
-//					initTwitter();
-//				} catch (SocialNetworkNotFoundException e) {
-//					Log.e("ATSS", "Unable to find TheTwitter object");
-//				}
+				t.start();
 			}
 		})
 		.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
