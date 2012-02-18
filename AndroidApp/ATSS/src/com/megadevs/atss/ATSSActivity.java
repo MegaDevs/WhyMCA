@@ -56,7 +56,7 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		
 		if (true) {
 			Intent i = new Intent(this, FirstRunActivity.class);
-			startActivity(i);
+			startActivityForResult(i, ACTIVITY_SET_PIN);
 		} else {
 			previewSurface = (SurfaceView)findViewById(R.id.preview);
 			previewSurface.getHolder().addCallback(new Callback() {
@@ -139,6 +139,18 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		initNfc(intent);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case ACTIVITY_SET_PIN:
+			if (resultCode == RESULT_OK) {
+				//TODO settato pin
+			}
+			break;
+		}
 	}
 
 	@Override
