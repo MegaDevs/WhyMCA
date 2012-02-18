@@ -28,9 +28,10 @@
     // Get theft id
     NSString *theftId = [[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] 
                          objectForKey:kMDUserDefaultTheftId];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:theftId forKey:kMDUserDefaultTheftId];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (theftId != nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:theftId forKey:kMDUserDefaultTheftId];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
     self.masterViewController = [[MDMasterViewController alloc] initWithNibName:@"MDMasterViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];

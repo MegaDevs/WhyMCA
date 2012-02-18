@@ -13,6 +13,8 @@
 #import "UIView+SelfFromNib.h"
 #import "UIImageView+AFNetworking.h"
 #import "Constants.h"
+#import "ASIFormDataRequest.h"
+#import "NSData+JSON.h"
 
 @implementation MDMasterViewController
 
@@ -24,7 +26,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Master", @"Master");
+        self.title = NSLocalizedString(@"Not robbed yet", nil);
         self.dataSource = [[NSMutableArray alloc] init];
     }
     return self;
@@ -42,9 +44,39 @@
        theftId != nil) {
         _theftId = theftId;
         NSLog(@"Theft id set to %@", theftId);
-        [self.navigationItem setTitle:theftId];
+        [self.navigationItem setTitle:[NSString stringWithFormat:@"Robbed. Theft ID: %@",theftId]];
         // Invoke api
+        NSString *uri = [NSString stringWithFormat:@"%@%@?%@=%@", kMDURLBackend, kMDPathGetPics, kMDParTheftIdGetPics, theftId];
+        NSLog(@"%@", uri);
+        ASIFormDataRequest  *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:uri]];
+        [request setDelegate:self];
+        [request startAsynchronous];
     }
+}
+
+#pragma mark - ASIHTTPRequest callbacks
+- (void)requestFinished:(ASIHTTPRequest *)aResponse
+{
+    NSArray *pics = [[aResponse responseData] decodeJson];
+    NSLog(@"Pics %@", [pics objectAtIndex:1]);
+    NSMutableArray *tempDataSource = [[NSMutableArray alloc] initWithCapacity:[pics count]];
+    [self.dataSource removeAllObjects];
+    
+    for (NSString *pic in pics) {
+        NSString *completeUrl = [NSString stringWithFormat:@"%@%@/%@",kMDURLBackend, self.theftId, pic];
+        [tempDataSource addObject:completeUrl];
+        if ([tempDataSource count] == 4) {
+            [self.dataSource addObject:[tempDataSource copy]];
+            [tempDataSource removeAllObjects];
+        }
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSLog(@"ERROR: %@", [request error]);
 }
 
 #pragma mark - View lifecycle
@@ -53,13 +85,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    NSMutableArray *aRowData = [[NSMutableArray alloc] init];
-    [aRowData addObject:kMDURLTestPic1];
-    [aRowData addObject:kMDURLTestPic2];
-    [aRowData addObject:kMDURLTestPic3];
-    [aRowData addObject:kMDURLTestPic4];
-    
-    [self.dataSource addObject:aRowData];
     
 }
 
@@ -104,7 +129,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return [self.dataSource count];
 }
 
 // Customize the appearance of table view cells.
