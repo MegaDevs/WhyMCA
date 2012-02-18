@@ -1,14 +1,25 @@
 package com.megadevs.atss;
 
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PreviewCallback;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -17,11 +28,25 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ATSSActivity extends CommonActivity {
+public class ATSSActivity extends CommonActivity implements Runnable{
 
+	/*Arduino Stuffs --------------------------------------------------*/
+	private static final String TAG = "TestArduino";
+	private static final String ACTION_USB_PERMISSION = "test.arduino.action.USB_PERMISSION";
+
+	private UsbManager mUsbManager;
+	private PendingIntent mPermissionIntent;
+	private boolean mPermissionRequestPending;
+	private TextView log;
+
+	UsbAccessory mAccessory;
+	ParcelFileDescriptor mFileDescriptor;
+	FileInputStream mInputStream;
+	FileOutputStream mOutputStream;
+	/*-----------------------------------------------------------------*/
+	
 	private SurfaceView previewSurface;
 	private Camera theCamera;
-
 	private boolean surfaceReady = false;
 	private boolean isActive = false;
 
@@ -29,6 +54,23 @@ public class ATSSActivity extends CommonActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		//ARDUINO
+		mUsbManager = UsbManager.getInstance(this);
+		mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(
+				ACTION_USB_PERMISSION), 0);
+		IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
+		registerReceiver(mUsbReceiver, filter);
+
+		if (getLastNonConfigurationInstance() != null) {
+			mAccessory = (UsbAccessory) getLastNonConfigurationInstance();
+			openAccessory(mAccessory);
+		}
+
+		log = (TextView)findViewById(R.id.log);
+
+		enableControls(false);
 
 		previewSurface = (SurfaceView)findViewById(R.id.preview);
 		previewSurface.getHolder().addCallback(new Callback() {
@@ -48,6 +90,46 @@ public class ATSSActivity extends CommonActivity {
 		initNfc(getIntent());
 	}
 
+	//OK
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		if (mAccessory != null) {
+			return mAccessory;
+		} else {
+			return super.onRetainNonConfigurationInstance();
+		}
+	}
+
+
+	//ARDUINO
+	//TODO bradcast
+	private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (ACTION_USB_PERMISSION.equals(action)) {
+				synchronized (this) {
+					UsbAccessory accessory = UsbManager.getAccessory(intent);
+					if (intent.getBooleanExtra(
+							UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+						openAccessory(accessory);
+					} else {
+						Log.d(TAG, "permission denied for accessory "
+								+ accessory);
+					}
+					mPermissionRequestPending = false;
+				}
+			} else if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action)) {
+				UsbAccessory accessory = UsbManager.getAccessory(intent);
+				if (accessory != null && accessory.equals(mAccessory)) {
+					closeAccessory();
+				}
+			}
+		}
+	};
+
+	
+	
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
@@ -60,6 +142,9 @@ public class ATSSActivity extends CommonActivity {
 		if (theCamera != null) {
 			theCamera.stopPreview();
 		}
+		
+		//Arduino
+		closeAccessory();
 	}
 
 	@Override
@@ -70,7 +155,34 @@ public class ATSSActivity extends CommonActivity {
 		} else if (surfaceReady) {
 			initCamera(previewSurface.getHolder());
 		}
+		
+		
+		//Arduino
+		Intent intent = getIntent();
+		if (mInputStream != null && mOutputStream != null) {
+			return;
+		}
+
+		UsbAccessory[] accessories = mUsbManager.getAccessoryList();
+		UsbAccessory accessory = (accessories == null ? null : accessories[0]);
+		if (accessory != null) {
+			if (mUsbManager.hasPermission(accessory)) {
+				openAccessory(accessory);
+			} else {
+				synchronized (mUsbReceiver) {
+					if (!mPermissionRequestPending) {
+						mUsbManager.requestPermission(accessory,
+								mPermissionIntent);
+						mPermissionRequestPending = true;
+					}
+				}
+			}
+		} else {
+			Log.d(TAG, "mAccessory is null");
+		}
 	}
+	
+	
 
 	@Override
 	protected void onStop() {
@@ -101,6 +213,11 @@ public class ATSSActivity extends CommonActivity {
 	
 	public void deactivate() {
 		isActive = false;
+	}
+
+	public void onDestroy() {
+		unregisterReceiver(mUsbReceiver);
+		super.onDestroy();
 	}
 
 	private void initNfc(Intent intent) {
@@ -165,5 +282,156 @@ public class ATSSActivity extends CommonActivity {
 			out += hex[i];
 		}
 		return out;
+	}
+	
+	//ARDUINO
+	private void openAccessory(UsbAccessory accessory) {
+		mFileDescriptor = mUsbManager.openAccessory(accessory);
+		if (mFileDescriptor != null) {
+			mAccessory = accessory;
+			FileDescriptor fd = mFileDescriptor.getFileDescriptor();
+			mInputStream = new FileInputStream(fd);
+			mOutputStream = new FileOutputStream(fd);
+			Thread thread = new Thread(null, this, "TestArduino");
+			thread.start();
+			Log.d(TAG, "accessory opened");
+			enableControls(true);
+		} else {
+			Log.d(TAG, "accessory open fail");
+		}
+	}
+
+	//ARDUINO
+	private void closeAccessory() {
+		enableControls(false);
+
+		try {
+			if (mFileDescriptor != null) {
+				mFileDescriptor.close();
+			}
+		} catch (IOException e) {
+		} finally {
+			mFileDescriptor = null;
+			mAccessory = null;
+		}
+	}
+	
+	//ARDUINO
+	protected void enableControls(boolean enable) {
+	}
+	
+	private void notifyTheftEvent(byte e){
+		final Intent i = new Intent();
+		final Date d = Calendar.getInstance().getTime();
+		i.putExtra("timestamp", d.getTime());
+		
+		if(e == 0x1)
+			i.putExtra("event", "motion_detected");
+		else if(e == 0x2)
+			i.putExtra("event", "motion_ended");
+		else 	
+			i.putExtra("event", "unknown_event");
+		
+		sendOrderedBroadcast(i, null);
+		
+		runOnUiThread(new Runnable() {
+			public void run() {
+				if(log==null)log = (TextView)findViewById(R.id.log);
+				System.out.println("# " + d.getHours() + ":" +d.getMinutes()+":"+d.getSeconds()+"  -> "+i.getStringExtra("event"));
+				log.setText("# " + d.getHours() + ":" +d.getMinutes()+":"+d.getSeconds()+"  -> "+i.getStringExtra("event")
+						      +"\n" +log.getText());
+			}
+		});
+		
+	}
+
+	public void run() {
+		int ret = 0;
+		byte[] buffer = new byte[64];
+		int i;
+
+		while (ret >= 0) {
+			try {
+				ret = mInputStream.read(buffer);
+			} catch (IOException e) {
+				break;
+			}
+
+			i = 0;
+			while (i < ret) {
+				int len = ret - i;
+
+				switch (buffer[i]) {
+				case 0x1:
+					/*if (len >= 3) {
+						Message m = Message.obtain(mHandler, MESSAGE_SWITCH);
+						m.obj = new SwitchMsg(buffer[i + 1], buffer[i + 2]);
+						mHandler.sendMessage(m);
+					}
+					i += 3;*/
+
+				case 0x4:
+				case 0x5:
+				case 0x6:
+				default:
+					Log.d(TAG, "unknown msg: " + buffer[i]);
+					final byte a = buffer[2];
+					//final String a = ""+ (char)buffer[0] + (char)buffer[1] + (char)buffer[2];/*ByteArrayToHexString(buffer);*/
+					i = len;
+					
+					//SEND NOTIFY!!
+					notifyTheftEvent(a);
+					
+					break;
+				}
+			}
+
+		}
+	}
+
+	/* può servire se gestiamo Messaggi come classi 
+	Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MESSAGE_SWITCH:
+				SwitchMsg o = (SwitchMsg) msg.obj;
+				handleSwitchMessage(o);
+				break;
+
+			case MESSAGE_TEMPERATURE:
+				TemperatureMsg t = (TemperatureMsg) msg.obj;
+				handleTemperatureMessage(t);
+				break;
+
+			case MESSAGE_LIGHT:
+				LightMsg l = (LightMsg) msg.obj;
+				handleLightMessage(l);
+				break;
+
+			case MESSAGE_JOY:
+				JoyMsg j = (JoyMsg) msg.obj;
+				handleJoyMessage(j);
+				break;
+
+			}
+		}
+	};*/
+
+	public void sendCommand(byte command, byte target, int value) {
+		byte[] buffer = new byte[3];
+		if (value > 255)
+			value = 255;
+
+		buffer[0] = command;
+		buffer[1] = target;
+		buffer[2] = (byte) value;
+		if (mOutputStream != null && buffer[1] != -1) {
+			try {
+				mOutputStream.write(buffer);
+			} catch (IOException e) {
+				Log.e(TAG, "write failed", e);
+			}
+		}
 	}
 }

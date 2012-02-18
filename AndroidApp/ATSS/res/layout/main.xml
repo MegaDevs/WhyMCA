@@ -23,6 +23,13 @@
 	        android:layout_marginLeft="10dp"
 	        android:layout_marginRight="10dp" />
     </RelativeLayout>
+
+    <TextView android:id="@+id/log"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/pinpad"
+        android:text="...w8ing..." />
     
     <SurfaceView android:id="@+id/preview"
         android:layout_width="100dp"
@@ -30,5 +37,6 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/status"
         android:visibility="gone" />
+    
 
 </RelativeLayout>
