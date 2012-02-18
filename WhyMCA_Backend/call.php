@@ -9,7 +9,7 @@
 
     foreach($numbers as $number) {
         $request = $TROPO_BASE_URL.$TROPO_VOICE_TOKEN."&sentence=".$name.$BASE_SENTENCE."&numberToDial=".$number;
-        $result = fopen($request);
+        $result = fopen($request, "r");
     }
 
 ?>
