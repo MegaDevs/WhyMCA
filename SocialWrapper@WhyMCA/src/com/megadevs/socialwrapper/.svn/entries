@@ -28,16 +28,24 @@ dextor
 
 utils
 dir
+
+
+
+delete
 
 exceptions
 dir
+
+
+
+delete
 
 SocialFriend.java
 file
 
 
 
-
+delete
 2012-01-24T22:28:09.635316Z
 ffabdecf5acf0bc92821ed4a09a7a0ef
 2012-01-24T22:17:33.807619Z
@@ -68,13 +76,17 @@ zebganzo
 
 thetwitter
 dir
+
+
+
+delete
 
 SocialNetwork.java
 file
 
 
 
-
+delete
 2012-02-07T13:40:40.986293Z
 700188c478a9171d796ed9fb1fabb3ec
 2012-02-07T14:43:12.233981Z
@@ -103,38 +115,26 @@ dextor
 
 2959
 
-thetumblr
+whymca
 dir
 
 
 
 add
-
-
-
-
-
-
-
-
-
-
-
-
-
-copied
-https://subversion.assembla.com/svn/megadevs/trunk/SocialWrapper/src/com/megadevs/socialwrapper/thetumbler
-59
 
 thefacebook
 dir
+
+
+
+delete
 
 SocialSessionStore.java
 file
 
 
 
-
+delete
 2012-01-24T22:28:09.635316Z
 1cfdeb18142b2c9633a79a78385ec382
 2012-01-24T22:17:33.807619Z
@@ -168,7 +168,7 @@ file
 
 
 
-
+delete
 2012-02-07T15:36:11.562471Z
 d5d7d66dc0e6ff81b063eca1bc65e036
 2012-02-07T19:50:56.979166Z
@@ -199,6 +199,10 @@ dextor
 
 theflickr
 dir
+
+
+
+delete
 
 thetumbler
 dir
@@ -209,4 +213,8 @@ delete
 
 thefoursquare
 dir
+
+
+
+delete
 

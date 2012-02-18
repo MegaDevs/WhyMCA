@@ -42,7 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiramot.foursquare.android.Foursquare.DialogListener;
-import com.megadevs.socialwrapper.R;
+import com.megadevs.socialwrapper.whymca.R;
 
 public class FoursquareDialog extends Dialog {
 
