@@ -16,6 +16,8 @@ import com.megadevs.socialwrapper.whymca.thetwitter.TheTwitter;
 public class FirstRunActivity extends CommonActivity {
 
 	public static TheTwitter tw;
+	
+	private String pin;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class FirstRunActivity extends CommonActivity {
 	}
 
 	public void confirmPin(View v) {
-		final String pin = ((TextView)findViewById(R.id.pinpad_text)).getText().toString();
+		pin = ((TextView)findViewById(R.id.pinpad_text)).getText().toString();
 		if (pin.length() != 4) {
 			Toast.makeText(this, R.string.pin_size_wrong, Toast.LENGTH_LONG).show();
 			return;
@@ -36,9 +38,6 @@ public class FirstRunActivity extends CommonActivity {
 		.setCancelable(false)
 		.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				PrefMan.setPref(PREF_PIN, pin);
-				PrefMan.setPrefBool(PREF_PIN_SETTED, true);
-
 				try {
 					initTwitter();
 				} catch (SocialNetworkNotFoundException e) {
@@ -67,6 +66,9 @@ public class FirstRunActivity extends CommonActivity {
 			@Override
 			public void onLoginCallback(String result) {
 				Log.i("ATSS", "Twitter successfully logged in");
+				
+				PrefMan.setPref(PREF_PIN, pin);
+				PrefMan.setPrefBool(PREF_PIN_SETTED, true);
 				
 				Intent i = new Intent(FirstRunActivity.this, ATSSActivity.class);
 				startActivity(i);
