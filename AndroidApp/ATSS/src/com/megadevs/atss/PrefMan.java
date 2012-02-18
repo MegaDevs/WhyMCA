@@ -9,6 +9,7 @@ public class PrefMan {
 	public static final String PREF_PIN_SETTED = "pin_setted";
 	public static final String PREF_FIRST_RUN = "first_run";
 	public static final String PREF_ID = "id";
+	public static final String PREF_NFC_ID = "nfc_id";
 	
 	private static SharedPreferences preferences;
 	
