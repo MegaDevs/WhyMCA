@@ -11,6 +11,8 @@ public class ATSSApplication extends Application {
 		super.onCreate();
 		
 		PrefMan.init(getSharedPreferences("ATSS", MODE_PRIVATE));
+
+		PrefMan.setPref(PrefMan.PREF_NFC_ID, "041737824A2080");
 	}
 
 }

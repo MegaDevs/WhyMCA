@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -178,7 +177,6 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
 		initNfc(intent);
 	}
 
@@ -262,6 +260,7 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		findViewById(R.id.pinpad).setVisibility(View.GONE);
 		findViewById(R.id.preview).setVisibility(View.VISIBLE);
 		findViewById(R.id.btn_deactivate).setVisibility(View.VISIBLE);
+		((TextView)findViewById(R.id.status)).setText(R.string.enabled);
 	}
 	
 	public void deactivate(View v) {
@@ -269,6 +268,7 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		findViewById(R.id.pinpad).setVisibility(View.VISIBLE);
 		findViewById(R.id.preview).setVisibility(View.GONE);
 		findViewById(R.id.btn_deactivate).setVisibility(View.GONE);
+		((TextView)findViewById(R.id.status)).setText(R.string.disabled);
 	}
 
 	public void onDestroy() {
@@ -277,8 +277,12 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	}
 
 	private void initNfc(Intent intent) {
-		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-			String id = byteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));	
+		if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+			String id = byteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
+			if (id != null && id.equals(PrefMan.getPref(PrefMan.PREF_NFC_ID))) {
+				if (isActive) deactivate(findViewById(R.id.btn_deactivate));
+				else activate();
+			}
 		}
 	}
 
