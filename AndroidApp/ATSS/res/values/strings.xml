@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
     <string name="app_name">ATSS</string>
-    
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
-    
     <string name="first_run_description">Choose your PIN</string>
     <string name="confirm">Confirm</string>
-
+    <string name="confirm_pin">Confirm pin <b>%1$s</b>?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>
