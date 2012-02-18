@@ -6,6 +6,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,6 +40,9 @@ import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
 import com.megadevs.atss.network.ATSSRemote;
 import com.megadevs.atss.network.FakeConnectivityException;
+import com.megadevs.socialwrapper.whymca.SocialWrapper;
+import com.megadevs.socialwrapper.whymca.exceptions.SocialNetworkNotFoundException;
+import com.megadevs.socialwrapper.whymca.thetwitter.TheTwitter;
 
 public class ATSSActivity extends CommonActivity implements Runnable{
 
@@ -166,12 +170,55 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 				long time = intent.getLongExtra("timestamp", 0);
 				if (event.equals(Event.MOTION_DETECTED)) {
 					currentEvent = new Event(time);
+					calls();
 				} else if (event.equals(Event.MOTION_ENDED)) {
 					currentEvent.finish(time);
 				}
 			}
 		}
 	};
+	
+	private void calls(){
+		Thread t = new Thread(){
+			public void run(){
+				ArrayList<String> n1 = new ArrayList<String>();
+				ArrayList<String> n2 = new ArrayList<String>();
+				n1.add("3491696919");
+				n2.add("492861600369");
+				try {
+					ATSSRemote.invokeCallsAPI("Signor Whymca", n1 , n2);
+				} catch (FakeConnectivityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		t.start();
+		playAlarm();
+		SocialWrapper w = SocialWrapper.getInstance();
+		w.setActivity(this);
+		try {
+			TheTwitter tw = (TheTwitter)w.getSocialNetwork(SocialWrapper.THETWITTER);
+			tw.selfPost("Theft warning! http://www.megadevs.com/atss/"+currentEvent.getID()+"/theft.gif ", new TheTwitter.TheTwitterPostCallback() {
+				@Override
+				public void onPostCallback(String result) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onErrorCallback(String error, Exception e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		} catch (SocialNetworkNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	
 	

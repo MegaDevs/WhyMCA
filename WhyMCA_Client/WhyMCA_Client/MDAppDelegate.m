@@ -11,6 +11,7 @@
 #import "MDMasterViewController.h"
 #import "StackMob.h"
 #import "Constants.h"
+#import "ASIHTTPRequest.h"
 
 @implementation MDAppDelegate
 
@@ -24,6 +25,8 @@
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    
+    [ASIHTTPRequest setDefaultTimeOutSeconds:30];
     
     // Get theft id
     NSString *theftId = [[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] 
