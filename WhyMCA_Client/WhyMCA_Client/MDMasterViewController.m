@@ -18,6 +18,7 @@
 
 @synthesize detailViewController    = _detailViewController;
 @synthesize dataSource              = _dataSource;
+@synthesize theftId                 = _theftId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,6 +34,17 @@
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)setTheftId:(NSString *)theftId
+{
+    if(![theftId isEqualToString:_theftId] &&
+       theftId != nil) {
+        _theftId = theftId;
+        NSLog(@"Theft id set to %@", theftId);
+        [self.navigationItem setTitle:theftId];
+        // Invoke api
+    }
 }
 
 #pragma mark - View lifecycle

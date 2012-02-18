@@ -14,5 +14,6 @@
 
 @property (strong, nonatomic) MDDetailViewController    *detailViewController;
 @property (strong, nonatomic) NSMutableArray            *dataSource;
+@property (strong, nonatomic) NSString                  *theftId;
 
 @end
