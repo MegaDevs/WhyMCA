@@ -10,10 +10,6 @@ import android.widget.TextView;
 
 public class CommonActivity extends Activity {
 	
-	public static final String PREF_PIN = "pin";
-	public static final String PREF_PIN_SETTED = "pin_setted";
-	public static final String PREF_FIRST_RUN = "first_run";
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

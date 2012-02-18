@@ -38,11 +38,17 @@ public class FirstRunActivity extends CommonActivity {
 		.setCancelable(false)
 		.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				try {
-					initTwitter();
-				} catch (SocialNetworkNotFoundException e) {
-					Log.e("ATSS", "Unable to find TheTwitter object");
-				}
+				PrefMan.setPref(PrefMan.PREF_PIN, pin);
+				PrefMan.setPrefBool(PrefMan.PREF_PIN_SETTED, true);
+				
+				Intent i = new Intent(FirstRunActivity.this, ATSSActivity.class);
+				startActivity(i);
+				FirstRunActivity.this.finish();
+//				try {
+//					initTwitter();
+//				} catch (SocialNetworkNotFoundException e) {
+//					Log.e("ATSS", "Unable to find TheTwitter object");
+//				}
 			}
 		})
 		.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -67,8 +73,8 @@ public class FirstRunActivity extends CommonActivity {
 			public void onLoginCallback(String result) {
 				Log.i("ATSS", "Twitter successfully logged in");
 				
-				PrefMan.setPref(PREF_PIN, pin);
-				PrefMan.setPrefBool(PREF_PIN_SETTED, true);
+				PrefMan.setPref(PrefMan.PREF_PIN, pin);
+				PrefMan.setPrefBool(PrefMan.PREF_PIN_SETTED, true);
 				
 				Intent i = new Intent(FirstRunActivity.this, ATSSActivity.class);
 				startActivity(i);
