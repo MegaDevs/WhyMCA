@@ -1,5 +1,6 @@
 package com.megadevs.atss;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -15,12 +16,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -38,6 +38,8 @@ import android.widget.Toast;
 
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
+import com.megadevs.atss.network.ATSSRemote;
+import com.megadevs.atss.network.FakeConnectivityException;
 
 public class ATSSActivity extends CommonActivity implements Runnable{
 
@@ -291,23 +293,24 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 						public void onPreviewFrame(byte[] data, Camera camera) {
 							if (isActive) {
 								if (currentEvent != null && currentEvent.isActive()) {
-									Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length);
-									int diff = b.getWidth()-b.getHeight();
-									Bitmap out = Bitmap.createBitmap(b, 0, diff/2, b.getWidth(), b.getWidth(), new Matrix(), true);
-									b.recycle();
-									b = null;
-									try {
-										File tmpF = new File(tmpPath, System.currentTimeMillis()+".dat");
-										FileOutputStream f = new FileOutputStream(tmpF);
-										out.compress(CompressFormat.JPEG, 100, f);
-										f.close();
-										out.recycle();
-										out = null;
-										//TODO send file
-									} catch (FileNotFoundException e) {
-										e.printStackTrace();
-									} catch (IOException e) {
-										e.printStackTrace();
+									if (currentEvent.getLastFrameSent() < System.currentTimeMillis()-Event.MIN_FRAME_DELAY) {
+										Parameters p = camera.getParameters();
+										YuvImage img = new YuvImage(data, p.getPreviewFormat(), p.getPreviewSize().width, p.getPreviewSize().height, null);
+										final ByteArrayOutputStream f = new ByteArrayOutputStream();
+										img.compressToJpeg(new Rect(0, 0, p.getPreviewSize().width, p.getPreviewSize().height), 100, f);
+										new Thread(new Runnable() {
+											public void run() {
+												try {
+													ATSSRemote.invokePicsAPI(String.valueOf(currentEvent.getID()), f.toByteArray());
+													System.out.println("Frame sent for id "+currentEvent.getID()+" at time "+System.currentTimeMillis());
+												} catch (FakeConnectivityException e) {
+													e.printStackTrace();
+												} catch (IOException e) {
+													e.printStackTrace();
+												}
+											}
+										}).start();
+										currentEvent.setLastFrameSent(System.currentTimeMillis());
 									}
 								}
 							}
