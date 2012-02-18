@@ -9,6 +9,7 @@
 #import "MDAppDelegate.h"
 
 #import "MDMasterViewController.h"
+#import "StackMob.h"
 
 @implementation MDAppDelegate
 
@@ -19,6 +20,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 
     MDMasterViewController *masterViewController = [[MDMasterViewController alloc] initWithNibName:@"MDMasterViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
@@ -64,6 +67,28 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    
+    // Use device ID to uniquely identify user
+    NSString *deviceUDID = [[UIDevice currentDevice] uniqueIdentifier];
+    
+    token = [[token componentsSeparatedByString:@" "] componentsJoinedByString:@""];
+    // Persist your user's accessToken here if you need
+    [[StackMob stackmob] registerForPushWithUser:deviceUDID token:token andCallback:^(BOOL success, id result){
+        if(success){
+            // token saved sucessfully for user
+            NSLog(@"StacMob reg success");
+        }
+        else{
+            // Unable to register device for PUSH notifications
+            // Failed.  Alert your delgates
+            NSLog(@"StacMob reg fail");
+        }
+    }];
 }
 
 @end
