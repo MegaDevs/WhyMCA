@@ -54,6 +54,16 @@
                 android:resource="@xml/accessory_filter" />
         </activity>
 
+        <activity android:name="com.megadevs.socialwrapper.whymca.thetwitter.TheTwitterWebView"
+			android:launchMode="singleInstance">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="atss" android:host="oauth" />
+			</intent-filter>
+		</activity>
+        
         <uses-feature android:name="android.hardware.usb.accessory" />
     </application>
 
