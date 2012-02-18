@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/megadevs/!svn/ver/55/trunk/SocialWrapper/src/com/megadevs/socialwrapper/utils
+END
+Utils.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/megadevs/!svn/ver/55/trunk/SocialWrapper/src/com/megadevs/socialwrapper/utils/Utils.java
+END
+ClientHttpRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/megadevs/!svn/ver/55/trunk/SocialWrapper/src/com/megadevs/socialwrapper/utils/ClientHttpRequest.java
+END
+HTTPPostParameters.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/megadevs/!svn/ver/55/trunk/SocialWrapper/src/com/megadevs/socialwrapper/utils/HTTPPostParameters.java
+END
+HTTPResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/megadevs/!svn/ver/55/trunk/SocialWrapper/src/com/megadevs/socialwrapper/utils/HTTPResult.java
+END

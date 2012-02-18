@@ -1,0 +1,10 @@
+K 10
+svn:ignore
+V 147
+twitter4j-core-android-2.2.4.jar
+httpclient-4.1.2.jar
+signpost-commonshttp4-1.2.1.1.jar
+signpost-core-1.2.1.1.jar
+twitter4j-core-android-2.2.5.jar
+
+END

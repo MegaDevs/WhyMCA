@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/megadevs/!svn/ver/22/trunk/SocialWrapper/src/com/megadevs/socialwrapper/exceptions
+END
+MissingLoginCredentialsException.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/megadevs/!svn/ver/21/trunk/SocialWrapper/src/com/megadevs/socialwrapper/exceptions/MissingLoginCredentialsException.java
+END
+SocialNetworkNotFoundException.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/megadevs/!svn/ver/21/trunk/SocialWrapper/src/com/megadevs/socialwrapper/exceptions/SocialNetworkNotFoundException.java
+END
+NetworkErrorException.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/megadevs/!svn/ver/21/trunk/SocialWrapper/src/com/megadevs/socialwrapper/exceptions/NetworkErrorException.java
+END
+InvalidAuthenticationException.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/megadevs/!svn/ver/22/trunk/SocialWrapper/src/com/megadevs/socialwrapper/exceptions/InvalidAuthenticationException.java
+END
+InvalidSocialRequestException.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/megadevs/!svn/ver/21/trunk/SocialWrapper/src/com/megadevs/socialwrapper/exceptions/InvalidSocialRequestException.java
+END
+SocialExceptions.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/megadevs/!svn/ver/21/trunk/SocialWrapper/src/com/megadevs/socialwrapper/exceptions/SocialExceptions.java
+END
