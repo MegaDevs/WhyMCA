@@ -12,6 +12,7 @@
 
 @interface MDMasterViewController : UITableViewController
 
-@property (strong, nonatomic) MDDetailViewController *detailViewController;
+@property (strong, nonatomic) MDDetailViewController    *detailViewController;
+@property (strong, nonatomic) NSMutableArray            *dataSource;
 
 @end

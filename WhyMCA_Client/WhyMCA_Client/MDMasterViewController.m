@@ -9,16 +9,22 @@
 #import "MDMasterViewController.h"
 
 #import "MDDetailViewController.h"
+#import "MDGridTableViewCell.h"
+#import "UIView+SelfFromNib.h"
+#import "UIImageView+AFNetworking.h"
+#import "Constants.h"
 
 @implementation MDMasterViewController
 
-@synthesize detailViewController = _detailViewController;
+@synthesize detailViewController    = _detailViewController;
+@synthesize dataSource              = _dataSource;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"Master", @"Master");
+        self.dataSource = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -35,6 +41,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    NSMutableArray *aRowData = [[NSMutableArray alloc] init];
+    [aRowData addObject:kMDURLTestPic1];
+    [aRowData addObject:kMDURLTestPic2];
+    [aRowData addObject:kMDURLTestPic3];
+    [aRowData addObject:kMDURLTestPic4];
+    
+    [self.dataSource addObject:aRowData];
+    
 }
 
 - (void)viewDidUnload
@@ -84,16 +98,21 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"MDGridTableViewCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MDGridTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [MDGridTableViewCell selfFromNib];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
     // Configure the cell.
-    cell.textLabel.text = NSLocalizedString(@"Detail", @"Detail");
+    NSArray *aRowData = [self.dataSource objectAtIndex:indexPath.row];
+    [cell.pic1 setImageWithURL:[NSURL URLWithString:[aRowData objectAtIndex:0]]];
+    [cell.pic2 setImageWithURL:[NSURL URLWithString:[aRowData objectAtIndex:1]]];
+    [cell.pic3 setImageWithURL:[NSURL URLWithString:[aRowData objectAtIndex:2]]];
+    [cell.pic4 setImageWithURL:[NSURL URLWithString:[aRowData objectAtIndex:3]]];
+    
     return cell;
 }
 
@@ -134,12 +153,19 @@
     return YES;
 }
 */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kMDRowHeight;
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (!self.detailViewController) {
         self.detailViewController = [[MDDetailViewController alloc] initWithNibName:@"MDDetailViewController" bundle:nil];
     }
+    NSMutableArray *aRowData = [self.dataSource objectAtIndex:indexPath.row];
+    self.detailViewController.dataSource = aRowData;
     [self.navigationController pushViewController:self.detailViewController animated:YES];
 }
 

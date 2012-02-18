@@ -10,8 +10,7 @@
 
 @interface MDDetailViewController : UIViewController
 
-@property (strong, nonatomic) id detailItem;
-
-@property (strong, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (nonatomic, strong) IBOutlet UITableView  *tableView;
+@property (nonatomic, strong) NSMutableArray        *dataSource;
 
 @end

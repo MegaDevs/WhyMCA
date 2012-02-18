@@ -7,6 +7,7 @@
 //
 
 #import "MDDetailViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface MDDetailViewController ()
 - (void)configureView;
@@ -14,28 +15,14 @@
 
 @implementation MDDetailViewController
 
-@synthesize detailItem = _detailItem;
-@synthesize detailDescriptionLabel = _detailDescriptionLabel;
+@synthesize dataSource = _dataSource;
+@synthesize tableView  = _tableView;
 
 #pragma mark - Managing the detail item
-
-- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        
-        // Update the view.
-        [self configureView];
-    }
-}
 
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
-    if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,6 +32,14 @@
 }
 
 #pragma mark - View lifecycle
+
+- (void)setDataSource:(NSMutableArray *)dataSource
+{
+    if (self.dataSource != dataSource) {
+        _dataSource = dataSource;
+        [self.tableView reloadData];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -94,5 +89,41 @@
     }
     return self;
 }
-							
+
+#pragma mark - UITAbleView delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 320;
+}
+	
+// Customize the number of sections in the table view.
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.dataSource count];;
+}
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    // Configure the cell.
+    NSString *picUrlString = [self.dataSource objectAtIndex:indexPath.row];
+    UIImageView *picImageView = [[UIImageView alloc] init];
+    [picImageView setImageWithURL:[NSURL URLWithString:picUrlString]];
+    [cell setBackgroundView:picImageView];
+    
+    return cell;
+}
 @end
