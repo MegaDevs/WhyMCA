@@ -36,7 +36,7 @@
         if(count($savedPics = dir_entries("./".$theftId."/")) >= 3) {
 
             // Instanciate the class (uses default options with the addition of width/height specified)
-            $gif = new GifCreator(0, 2, array(-1, -1, -1), 600, 600);
+            $gif = new GifCreator(0, 2, array(-1, -1, -1), 320, 480);
 
             // Add each frame to the animation
             $gif->addFrame(file_get_contents($theftId."/".$savedPics[0]), 150, true);
