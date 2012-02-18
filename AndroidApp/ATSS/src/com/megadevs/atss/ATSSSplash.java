@@ -11,9 +11,9 @@ public class ATSSSplash extends CommonActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(new View(this));
 		
-		System.out.println((PrefMan.getPref(PREF_PIN) == null) ? "damn" : PrefMan.getPref(PREF_PIN));
+		System.out.println((PrefMan.getPref(PrefMan.PREF_PIN) == null) ? "damn" : PrefMan.getPref(PrefMan.PREF_PIN));
 		
-		if (!PrefMan.getPrefBool(CommonActivity.PREF_PIN_SETTED, false)) {
+		if (!PrefMan.getPrefBool(PrefMan.PREF_PIN_SETTED, false)) {
 			Intent i = new Intent(this, FirstRunActivity.class);
 			startActivity(i);
 		} else {

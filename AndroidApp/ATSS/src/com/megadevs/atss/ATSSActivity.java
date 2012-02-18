@@ -1,19 +1,24 @@
 package com.megadevs.atss;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
-import junit.framework.Test;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PreviewCallback;
@@ -39,6 +44,7 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	/*Arduino Stuffs --------------------------------------------------*/
 	private static final String TAG = "TestArduino";
 	private static final String ACTION_USB_PERMISSION = "test.arduino.action.USB_PERMISSION";
+	private static final String ACTION_ARDUINO_EVENT = "com.megadevs.atss.ARDUINO_EVENT";
 
 	private UsbManager mUsbManager;
 	private PendingIntent mPermissionIntent;
@@ -55,11 +61,18 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	private Camera theCamera;
 	private boolean surfaceReady = false;
 	private boolean isActive = false;
+	
+	private Event currentEvent = null;
+	
+	private File tmpPath;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		tmpPath = new File("/sdcard/Android/data/com.megadevs.atss/cache/");
+		tmpPath.mkdirs();
 
 		//ARDUINO
 		mUsbManager = UsbManager.getInstance(this);
@@ -78,14 +91,24 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 
 		enableControls(false);
 
+		//Android
+		IntentFilter filter2 = new IntentFilter(ACTION_ARDUINO_EVENT);
+		filter2.addAction(ACTION_ARDUINO_EVENT);
+		registerReceiver(mArduinoEventReceiver, filter2);
+		
 		previewSurface = (SurfaceView)findViewById(R.id.preview);
 		previewSurface.getHolder().addCallback(new Callback() {
 
 			public void surfaceDestroyed(SurfaceHolder holder) {}
 
 			public void surfaceCreated(final SurfaceHolder holder) {
+				System.out.println("Surface created");
 				surfaceReady = true;
 				if (theCamera == null) {
+					initCamera(holder);
+				} else {
+					theCamera.stopPreview();
+					theCamera.release();
 					initCamera(holder);
 				}
 			}
@@ -133,6 +156,21 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 			}
 		}
 	};
+	
+	private final BroadcastReceiver mArduinoEventReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (ACTION_ARDUINO_EVENT.equals(intent.getAction())) {
+				String event = intent.getStringExtra("event");
+				long time = intent.getLongExtra("timestamp", 0);
+				if (event.equals(Event.MOTION_DETECTED)) {
+					currentEvent = new Event(time);
+				} else if (event.equals(Event.MOTION_ENDED)) {
+					currentEvent.finish(time);
+				}
+			}
+		}
+	};
 
 	
 	
@@ -164,27 +202,32 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		
 		
 		//Arduino
-		Intent intent = getIntent();
-		if (mInputStream != null && mOutputStream != null) {
-			return;
-		}
-
-		UsbAccessory[] accessories = mUsbManager.getAccessoryList();
-		UsbAccessory accessory = (accessories == null ? null : accessories[0]);
-		if (accessory != null) {
-			if (mUsbManager.hasPermission(accessory)) {
-				openAccessory(accessory);
-			} else {
-				synchronized (mUsbReceiver) {
-					if (!mPermissionRequestPending) {
-						mUsbManager.requestPermission(accessory,
-								mPermissionIntent);
-						mPermissionRequestPending = true;
+		try {
+			Intent intent = getIntent();
+			if (mInputStream != null && mOutputStream != null) {
+				return;
+			}
+	
+			UsbAccessory[] accessories = mUsbManager.getAccessoryList();
+			UsbAccessory accessory = (accessories == null ? null : accessories[0]);
+			if (accessory != null) {
+				if (mUsbManager.hasPermission(accessory)) {
+					openAccessory(accessory);
+				} else {
+					synchronized (mUsbReceiver) {
+						if (!mPermissionRequestPending) {
+							mUsbManager.requestPermission(accessory,
+									mPermissionIntent);
+							mPermissionRequestPending = true;
+						}
 					}
 				}
+			} else {
+				Log.d(TAG, "mAccessory is null");
 			}
-		} else {
-			Log.d(TAG, "mAccessory is null");
+		} catch (Exception e) {
+			System.out.println("Arduino onResume error");
+			e.printStackTrace();
 		}
 	}
 	
@@ -204,7 +247,7 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		String text = ((TextView)findViewById(R.id.pinpad_text)).getText().toString();
 		if (text.length() == 4) {
 			((TextView)findViewById(R.id.pinpad_text)).setText("");
-			if (text.equals(PrefMan.getPref(PREF_PIN))) {
+			if (text.equals(PrefMan.getPref(PrefMan.PREF_PIN))) {
 				activate();
 			} else {
 				Toast.makeText(this, R.string.wrong_pin, Toast.LENGTH_LONG).show();
@@ -247,7 +290,26 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 					theCamera.setPreviewCallback(new PreviewCallback() {
 						public void onPreviewFrame(byte[] data, Camera camera) {
 							if (isActive) {
-								System.out.println("preview callback");
+								if (currentEvent != null && currentEvent.isActive()) {
+									Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length);
+									int diff = b.getWidth()-b.getHeight();
+									Bitmap out = Bitmap.createBitmap(b, 0, diff/2, b.getWidth(), b.getWidth(), new Matrix(), true);
+									b.recycle();
+									b = null;
+									try {
+										File tmpF = new File(tmpPath, System.currentTimeMillis()+".dat");
+										FileOutputStream f = new FileOutputStream(tmpF);
+										out.compress(CompressFormat.JPEG, 100, f);
+										f.close();
+										out.recycle();
+										out = null;
+										//TODO send file
+									} catch (FileNotFoundException e) {
+										e.printStackTrace();
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
 							}
 						}
 					});
@@ -334,16 +396,17 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	}
 	
 	private void notifyTheftEvent(byte e){
-		final Intent i = new Intent();
+		final Intent i = new Intent(ACTION_ARDUINO_EVENT);
+		i.setAction(ACTION_ARDUINO_EVENT);
 		final Date d = Calendar.getInstance().getTime();
 		i.putExtra("timestamp", d.getTime());
 		
 		if(e == 0x1)
-			i.putExtra("event", "motion_detected");
+			i.putExtra("event", Event.MOTION_DETECTED);
 		else if(e == 0x2)
-			i.putExtra("event", "motion_ended");
+			i.putExtra("event", Event.MOTION_ENDED);
 		else 	
-			i.putExtra("event", "unknown_event");
+			i.putExtra("event", Event.UNKNOWN_EVENT);
 		
 		sendOrderedBroadcast(i, null);
 		
