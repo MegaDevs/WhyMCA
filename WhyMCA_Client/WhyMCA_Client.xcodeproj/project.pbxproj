@@ -1,0 +1,316 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D7FA20E514EFAC8E001B3A1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7FA20E414EFAC8E001B3A1F /* UIKit.framework */; };
+		D7FA20E714EFAC8E001B3A1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7FA20E614EFAC8E001B3A1F /* Foundation.framework */; };
+		D7FA20E914EFAC8E001B3A1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7FA20E814EFAC8E001B3A1F /* CoreGraphics.framework */; };
+		D7FA20EF14EFAC8F001B3A1F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7FA20ED14EFAC8F001B3A1F /* InfoPlist.strings */; };
+		D7FA20F114EFAC8F001B3A1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FA20F014EFAC8F001B3A1F /* main.m */; };
+		D7FA20F514EFAC8F001B3A1F /* MDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FA20F414EFAC8F001B3A1F /* MDAppDelegate.m */; };
+		D7FA20F814EFAC8F001B3A1F /* MDFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FA20F714EFAC8F001B3A1F /* MDFirstViewController.m */; };
+		D7FA20FA14EFAC8F001B3A1F /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = D7FA20F914EFAC8F001B3A1F /* first.png */; };
+		D7FA20FC14EFAC8F001B3A1F /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D7FA20FB14EFAC8F001B3A1F /* first@2x.png */; };
+		D7FA20FF14EFAC8F001B3A1F /* MDSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FA20FE14EFAC8F001B3A1F /* MDSecondViewController.m */; };
+		D7FA210114EFAC8F001B3A1F /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = D7FA210014EFAC8F001B3A1F /* second.png */; };
+		D7FA210314EFAC8F001B3A1F /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D7FA210214EFAC8F001B3A1F /* second@2x.png */; };
+		D7FA210614EFAC8F001B3A1F /* MDFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7FA210414EFAC8F001B3A1F /* MDFirstViewController.xib */; };
+		D7FA210914EFAC8F001B3A1F /* MDSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7FA210714EFAC8F001B3A1F /* MDSecondViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D7FA20E014EFAC8E001B3A1F /* WhyMCA_Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhyMCA_Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7FA20E414EFAC8E001B3A1F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D7FA20E614EFAC8E001B3A1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D7FA20E814EFAC8E001B3A1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D7FA20EC14EFAC8F001B3A1F /* WhyMCA_Client-Info.plist */ = {isa = PBXFileReference; path = "WhyMCA_Client-Info.plist"; sourceTree = "<group>"; };
+		D7FA20EE14EFAC8F001B3A1F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D7FA20F014EFAC8F001B3A1F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D7FA20F214EFAC8F001B3A1F /* WhyMCA_Client-Prefix.pch */ = {isa = PBXFileReference; path = "WhyMCA_Client-Prefix.pch"; sourceTree = "<group>"; };
+		D7FA20F314EFAC8F001B3A1F /* MDAppDelegate.h */ = {isa = PBXFileReference; path = MDAppDelegate.h; sourceTree = "<group>"; };
+		D7FA20F414EFAC8F001B3A1F /* MDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDAppDelegate.m; sourceTree = "<group>"; };
+		D7FA20F614EFAC8F001B3A1F /* MDFirstViewController.h */ = {isa = PBXFileReference; path = MDFirstViewController.h; sourceTree = "<group>"; };
+		D7FA20F714EFAC8F001B3A1F /* MDFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDFirstViewController.m; sourceTree = "<group>"; };
+		D7FA20F914EFAC8F001B3A1F /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		D7FA20FB14EFAC8F001B3A1F /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		D7FA20FD14EFAC8F001B3A1F /* MDSecondViewController.h */ = {isa = PBXFileReference; path = MDSecondViewController.h; sourceTree = "<group>"; };
+		D7FA20FE14EFAC8F001B3A1F /* MDSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDSecondViewController.m; sourceTree = "<group>"; };
+		D7FA210014EFAC8F001B3A1F /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		D7FA210214EFAC8F001B3A1F /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		D7FA210514EFAC8F001B3A1F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MDFirstViewController.xib; sourceTree = "<group>"; };
+		D7FA210814EFAC8F001B3A1F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MDSecondViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7FA20DD14EFAC8E001B3A1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7FA20E514EFAC8E001B3A1F /* UIKit.framework in Frameworks */,
+				D7FA20E714EFAC8E001B3A1F /* Foundation.framework in Frameworks */,
+				D7FA20E914EFAC8E001B3A1F /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7FA20D514EFAC8E001B3A1F = {
+			isa = PBXGroup;
+			children = (
+				D7FA20EA14EFAC8E001B3A1F /* WhyMCA_Client */,
+				D7FA20E314EFAC8E001B3A1F /* Frameworks */,
+				D7FA20E114EFAC8E001B3A1F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D7FA20E114EFAC8E001B3A1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA20E014EFAC8E001B3A1F /* WhyMCA_Client.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7FA20E314EFAC8E001B3A1F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA20E414EFAC8E001B3A1F /* UIKit.framework */,
+				D7FA20E614EFAC8E001B3A1F /* Foundation.framework */,
+				D7FA20E814EFAC8E001B3A1F /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7FA20EA14EFAC8E001B3A1F /* WhyMCA_Client */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA20F314EFAC8F001B3A1F /* MDAppDelegate.h */,
+				D7FA20F414EFAC8F001B3A1F /* MDAppDelegate.m */,
+				D7FA20F614EFAC8F001B3A1F /* MDFirstViewController.h */,
+				D7FA20F714EFAC8F001B3A1F /* MDFirstViewController.m */,
+				D7FA20F914EFAC8F001B3A1F /* first.png */,
+				D7FA20FB14EFAC8F001B3A1F /* first@2x.png */,
+				D7FA20FD14EFAC8F001B3A1F /* MDSecondViewController.h */,
+				D7FA20FE14EFAC8F001B3A1F /* MDSecondViewController.m */,
+				D7FA210014EFAC8F001B3A1F /* second.png */,
+				D7FA210214EFAC8F001B3A1F /* second@2x.png */,
+				D7FA210414EFAC8F001B3A1F /* MDFirstViewController.xib */,
+				D7FA210714EFAC8F001B3A1F /* MDSecondViewController.xib */,
+				D7FA20EB14EFAC8F001B3A1F /* Supporting Files */,
+			);
+			path = WhyMCA_Client;
+			sourceTree = "<group>";
+		};
+		D7FA20EB14EFAC8F001B3A1F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA20EC14EFAC8F001B3A1F /* WhyMCA_Client-Info.plist */,
+				D7FA20ED14EFAC8F001B3A1F /* InfoPlist.strings */,
+				D7FA20F014EFAC8F001B3A1F /* main.m */,
+				D7FA20F214EFAC8F001B3A1F /* WhyMCA_Client-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7FA20DF14EFAC8E001B3A1F /* WhyMCA_Client */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7FA210C14EFAC8F001B3A1F /* Build configuration list for PBXNativeTarget "WhyMCA_Client" */;
+			buildPhases = (
+				D7FA20DC14EFAC8E001B3A1F /* Sources */,
+				D7FA20DD14EFAC8E001B3A1F /* Frameworks */,
+				D7FA20DE14EFAC8E001B3A1F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WhyMCA_Client;
+			productName = WhyMCA_Client;
+			productReference = D7FA20E014EFAC8E001B3A1F /* WhyMCA_Client.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7FA20D714EFAC8E001B3A1F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Università degli studi di Padova";
+			};
+			buildConfigurationList = D7FA20DA14EFAC8E001B3A1F /* Build configuration list for PBXProject "WhyMCA_Client" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D7FA20D514EFAC8E001B3A1F;
+			productRefGroup = D7FA20E114EFAC8E001B3A1F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7FA20DF14EFAC8E001B3A1F /* WhyMCA_Client */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D7FA20DE14EFAC8E001B3A1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7FA20EF14EFAC8F001B3A1F /* InfoPlist.strings in Resources */,
+				D7FA20FA14EFAC8F001B3A1F /* first.png in Resources */,
+				D7FA20FC14EFAC8F001B3A1F /* first@2x.png in Resources */,
+				D7FA210114EFAC8F001B3A1F /* second.png in Resources */,
+				D7FA210314EFAC8F001B3A1F /* second@2x.png in Resources */,
+				D7FA210614EFAC8F001B3A1F /* MDFirstViewController.xib in Resources */,
+				D7FA210914EFAC8F001B3A1F /* MDSecondViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7FA20DC14EFAC8E001B3A1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7FA20F114EFAC8F001B3A1F /* main.m in Sources */,
+				D7FA20F514EFAC8F001B3A1F /* MDAppDelegate.m in Sources */,
+				D7FA20F814EFAC8F001B3A1F /* MDFirstViewController.m in Sources */,
+				D7FA20FF14EFAC8F001B3A1F /* MDSecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D7FA20ED14EFAC8F001B3A1F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7FA20EE14EFAC8F001B3A1F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D7FA210414EFAC8F001B3A1F /* MDFirstViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7FA210514EFAC8F001B3A1F /* en */,
+			);
+			name = MDFirstViewController.xib;
+			sourceTree = "<group>";
+		};
+		D7FA210714EFAC8F001B3A1F /* MDSecondViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7FA210814EFAC8F001B3A1F /* en */,
+			);
+			name = MDSecondViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D7FA210A14EFAC8F001B3A1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D7FA210B14EFAC8F001B3A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D7FA210D14EFAC8F001B3A1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WhyMCA_Client/WhyMCA_Client-Prefix.pch";
+				INFOPLIST_FILE = "WhyMCA_Client/WhyMCA_Client-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D7FA210E14EFAC8F001B3A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WhyMCA_Client/WhyMCA_Client-Prefix.pch";
+				INFOPLIST_FILE = "WhyMCA_Client/WhyMCA_Client-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7FA20DA14EFAC8E001B3A1F /* Build configuration list for PBXProject "WhyMCA_Client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7FA210A14EFAC8F001B3A1F /* Debug */,
+				D7FA210B14EFAC8F001B3A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7FA210C14EFAC8F001B3A1F /* Build configuration list for PBXNativeTarget "WhyMCA_Client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7FA210D14EFAC8F001B3A1F /* Debug */,
+				D7FA210E14EFAC8F001B3A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7FA20D714EFAC8E001B3A1F /* Project object */;
+}
