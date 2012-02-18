@@ -27,7 +27,7 @@
         echo "Pic: ".$pic."<br/>";
         $thefile = base64_decode($pic);
         $img = imagecreatefromstring($thefile);
-        $imgRot = imagerotate($img, 90)
+        $imgRot = imagerotate($img, 270, 0);
 
         //header('Content-Type: image/jpeg');
         imagejpeg($imgRot, $theftId."/".sha1($pic).".jpg");
