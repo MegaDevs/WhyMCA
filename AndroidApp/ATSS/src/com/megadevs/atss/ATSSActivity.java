@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.android.future.usb.UsbAccessory;
+import com.android.future.usb.UsbManager;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
