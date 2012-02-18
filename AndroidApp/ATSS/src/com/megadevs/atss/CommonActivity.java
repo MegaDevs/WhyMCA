@@ -14,15 +14,9 @@ public class CommonActivity extends Activity {
 	public static final String PREF_PIN_SETTED = "pin_setted";
 	public static final String PREF_FIRST_RUN = "first_run";
 	
-	public static final int ACTIVITY_SET_PIN = 1;
-
-	protected SharedPreferences preferences;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		preferences = getPreferences(MODE_PRIVATE);
 	}
 	
 	public void pinpadNumber(View v) {

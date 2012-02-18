@@ -23,6 +23,16 @@
 	        android:layout_marginLeft="10dp"
 	        android:layout_marginRight="10dp" />
     </RelativeLayout>
+    
+    <SurfaceView android:id="@+id/preview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/status"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone" />
 
     <TextView android:id="@+id/log"
         android:layout_width="fill_parent"
@@ -31,12 +41,14 @@
         android:layout_below="@id/pinpad"
         android:text="...w8ing..." />
     
-    <SurfaceView android:id="@+id/preview"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+    <Button android:id="@+id/btn_deactivate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/status"
+        android:layout_marginBottom="10dp"
+        android:text="@string/deactivate"
+        android:onClick="deactivate"
         android:visibility="gone" />
-    
 
 </RelativeLayout>

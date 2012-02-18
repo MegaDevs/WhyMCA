@@ -200,10 +200,10 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		super.pinpadNumber(v);
 		String text = ((TextView)findViewById(R.id.pinpad_text)).getText().toString();
 		if (text.length() == 4) {
+			((TextView)findViewById(R.id.pinpad_text)).setText("");
 			if (text.equals(PrefMan.getPref(PREF_PIN))) {
 				activate();
 			} else {
-				((TextView)findViewById(R.id.pinpad_text)).setText("");
 				Toast.makeText(this, R.string.wrong_pin, Toast.LENGTH_LONG).show();
 			}
 		}
@@ -211,11 +211,16 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	
 	public void activate() {
 		isActive = true;
-		
+		findViewById(R.id.pinpad).setVisibility(View.GONE);
+		findViewById(R.id.preview).setVisibility(View.VISIBLE);
+		findViewById(R.id.btn_deactivate).setVisibility(View.VISIBLE);
 	}
 	
-	public void deactivate() {
+	public void deactivate(View v) {
 		isActive = false;
+		findViewById(R.id.pinpad).setVisibility(View.VISIBLE);
+		findViewById(R.id.preview).setVisibility(View.GONE);
+		findViewById(R.id.btn_deactivate).setVisibility(View.GONE);
 	}
 
 	public void onDestroy() {
@@ -238,7 +243,9 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 					theCamera.setPreviewDisplay(holder);
 					theCamera.setPreviewCallback(new PreviewCallback() {
 						public void onPreviewFrame(byte[] data, Camera camera) {
-							System.out.println("preview callback");
+							if (isActive) {
+								System.out.println("preview callback");
+							}
 						}
 					});
 					theCamera.startPreview();

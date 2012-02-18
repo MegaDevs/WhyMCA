@@ -6,8 +6,9 @@
     <string name="first_run_description">Choose a 4 digit PIN</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_pin">Confirm pin <b>%1$s</b>?</string>
+    <string name="deactivate">Deactivate</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-	<string name="wrong_pin">Wrong PIN</string>
-	<string name="pin_size_wrong">PIN must be 4 digits length</string>
+    <string name="wrong_pin">Wrong PIN</string>
+    <string name="pin_size_wrong">PIN must be 4 digits length</string>
 </resources>
