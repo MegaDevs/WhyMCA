@@ -1,25 +1,43 @@
 //
-//  MDSecondViewController.m
+//  MDDetailViewController.m
 //  WhyMCA_Client
 //
 //  Created by Nicola Miotto on 2/18/12.
 //  Copyright (c) 2012 Università degli studi di Padova. All rights reserved.
 //
 
-#import "MDSecondViewController.h"
+#import "MDDetailViewController.h"
 
-@implementation MDSecondViewController
+@interface MDDetailViewController ()
+- (void)configureView;
+@end
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+@implementation MDDetailViewController
+
+@synthesize detailItem = _detailItem;
+@synthesize detailDescriptionLabel = _detailDescriptionLabel;
+
+#pragma mark - Managing the detail item
+
+- (void)setDetailItem:(id)newDetailItem
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        self.title = NSLocalizedString(@"Second", @"Second");
-        self.tabBarItem.image = [UIImage imageNamed:@"second"];
+    if (_detailItem != newDetailItem) {
+        _detailItem = newDetailItem;
+        
+        // Update the view.
+        [self configureView];
     }
-    return self;
 }
-							
+
+- (void)configureView
+{
+    // Update the user interface for the detail item.
+
+    if (self.detailItem) {
+        self.detailDescriptionLabel.text = [self.detailItem description];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -32,6 +50,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [self configureView];
 }
 
 - (void)viewDidUnload
@@ -67,4 +86,13 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = NSLocalizedString(@"Detail", @"Detail");
+    }
+    return self;
+}
+							
 @end

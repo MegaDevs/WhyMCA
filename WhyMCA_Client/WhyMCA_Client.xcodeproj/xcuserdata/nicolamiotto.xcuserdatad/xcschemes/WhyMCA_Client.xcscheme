@@ -13,7 +13,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D7FA20DF14EFAC8E001B3A1F"
+               BlueprintIdentifier = "D7FA211D14EFB137001B3A1F"
                BuildableName = "WhyMCA_Client.app"
                BlueprintName = "WhyMCA_Client"
                ReferencedContainer = "container:WhyMCA_Client.xcodeproj">
@@ -31,7 +31,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D7FA20DF14EFAC8E001B3A1F"
+            BlueprintIdentifier = "D7FA211D14EFB137001B3A1F"
             BuildableName = "WhyMCA_Client.app"
             BlueprintName = "WhyMCA_Client"
             ReferencedContainer = "container:WhyMCA_Client.xcodeproj">
@@ -49,7 +49,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D7FA20DF14EFAC8E001B3A1F"
+            BlueprintIdentifier = "D7FA211D14EFB137001B3A1F"
             BuildableName = "WhyMCA_Client.app"
             BlueprintName = "WhyMCA_Client"
             ReferencedContainer = "container:WhyMCA_Client.xcodeproj">
@@ -67,7 +67,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D7FA20DF14EFAC8E001B3A1F"
+            BlueprintIdentifier = "D7FA211D14EFB137001B3A1F"
             BuildableName = "WhyMCA_Client.app"
             BlueprintName = "WhyMCA_Client"
             ReferencedContainer = "container:WhyMCA_Client.xcodeproj">

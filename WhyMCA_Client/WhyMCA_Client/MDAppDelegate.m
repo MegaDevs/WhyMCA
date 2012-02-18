@@ -8,24 +8,21 @@
 
 #import "MDAppDelegate.h"
 
-#import "MDFirstViewController.h"
-
-#import "MDSecondViewController.h"
+#import "MDMasterViewController.h"
 
 @implementation MDAppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController = _tabBarController;
+@synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    UIViewController *viewController1 = [[MDFirstViewController alloc] initWithNibName:@"MDFirstViewController" bundle:nil];
-    UIViewController *viewController2 = [[MDSecondViewController alloc] initWithNibName:@"MDSecondViewController" bundle:nil];
-    self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
-    self.window.rootViewController = self.tabBarController;
+
+    MDMasterViewController *masterViewController = [[MDMasterViewController alloc] initWithNibName:@"MDMasterViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -68,19 +65,5 @@
      See also applicationDidEnterBackground:.
      */
 }
-
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-}
-*/
-
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
-{
-}
-*/
 
 @end
