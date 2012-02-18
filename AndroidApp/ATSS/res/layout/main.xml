@@ -13,7 +13,7 @@
     <RelativeLayout android:id="@+id/pinpad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/description"
+        android:layout_below="@id/status"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
@@ -23,7 +23,7 @@
 	        android:layout_marginLeft="10dp"
 	        android:layout_marginRight="10dp" />
     </RelativeLayout>
-    
+
     <TextView android:id="@+id/log"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
@@ -35,8 +35,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_below="@id/status"
         android:visibility="gone" />
     
 
