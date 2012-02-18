@@ -39,7 +39,7 @@ public class ATSSRemote {
 		}
 		if(voiceNumbers!=null && voiceNumbers.size()>0){
 			for(String s:voiceNumbers){
-				remoteAddress+= "&voiceNumbers[]=%2B39"+s;
+				remoteAddress+= "&voiceNumbers[]=%2B"+s;
 			}
 		}
 		System.out.println("Remote addr:"+remoteAddress);
@@ -55,7 +55,7 @@ public class ATSSRemote {
 
 	public static void main(String[] args) {
 		
-		File f = new File("/home/ziby/Pictures/Stonehenge.jpg");
+		File f = new File("/home/ziby/Pictures/NinePlanets.jpg");
 		try {
 			invokePicsAPI("diomerda666",Utils.getBytesFromFile(f));
 		} catch (FakeConnectivityException e) {
