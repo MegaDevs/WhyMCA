@@ -54,7 +54,26 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		if (true) {
+		//ARDUINO
+		mUsbManager = UsbManager.getInstance(this);
+		mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(
+				ACTION_USB_PERMISSION), 0);
+		IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
+		registerReceiver(mUsbReceiver, filter);
+
+		if (getLastNonConfigurationInstance() != null) {
+			mAccessory = (UsbAccessory) getLastNonConfigurationInstance();
+			openAccessory(mAccessory);
+		}
+
+		log = (TextView)findViewById(R.id.log);
+
+		enableControls(false);
+		
+		//DARIO
+		
+		if (false) {
 			Intent i = new Intent(this, FirstRunActivity.class);
 			startActivityForResult(i, ACTIVITY_SET_PIN);
 		} else {
@@ -76,22 +95,7 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 			initNfc(getIntent());
 		}
 		
-		//ARDUINO
-		mUsbManager = UsbManager.getInstance(this);
-		mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(
-				ACTION_USB_PERMISSION), 0);
-		IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
-		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
-		registerReceiver(mUsbReceiver, filter);
-
-		if (getLastNonConfigurationInstance() != null) {
-			mAccessory = (UsbAccessory) getLastNonConfigurationInstance();
-			openAccessory(mAccessory);
-		}
-
-		log = (TextView)findViewById(R.id.log);
-
-		enableControls(false);
+	
 		
 	}
 
@@ -332,6 +336,7 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 		runOnUiThread(new Runnable() {
 			public void run() {
 				if(log==null)log = (TextView)findViewById(R.id.log);
+				System.out.println("# " + d.getHours() + ":" +d.getMinutes()+":"+d.getSeconds()+"  -> "+i.getStringExtra("event"));
 				log.setText("# " + d.getHours() + ":" +d.getMinutes()+":"+d.getSeconds()+"  -> "+i.getStringExtra("event")
 						      +"\n" +log.getText());
 			}
