@@ -6,9 +6,9 @@ public class Event {
 	public static final String MOTION_ENDED = "motion_ended";
 	public static final String UNKNOWN_EVENT = "unknown_event";
 	
-	public static final long MIN_FRAME_DELAY = 1000;
+	public static final long MIN_FRAME_DELAY = 250;
 	
-	static private int ID = PrefMan.getPrefInt(PrefMan.PREF_ID, 0);
+	static private int ID = 1;//PrefMan.getPrefInt(PrefMan.PREF_ID, 1);
 
 	private int myId;
 	private long startTime;
@@ -21,7 +21,7 @@ public class Event {
 	public Event(long t) {
 		startTime = t;
 		myId = ID;
-		ID++;
+		//ID++;
 		PrefMan.setPrefInt(PrefMan.PREF_ID, ID);
 		isActive = true;
 	}

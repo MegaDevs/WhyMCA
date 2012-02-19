@@ -165,14 +165,16 @@ public class ATSSActivity extends CommonActivity implements Runnable{
 	private final BroadcastReceiver mArduinoEventReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (ACTION_ARDUINO_EVENT.equals(intent.getAction())) {
+			if (isActive && ACTION_ARDUINO_EVENT.equals(intent.getAction())) {
 				String event = intent.getStringExtra("event");
 				long time = intent.getLongExtra("timestamp", 0);
 				if (event.equals(Event.MOTION_DETECTED)) {
 					currentEvent = new Event(time);
 					calls();
 				} else if (event.equals(Event.MOTION_ENDED)) {
-					currentEvent.finish(time);
+					if (currentEvent != null) {
+						currentEvent.finish(time);
+					}
 				}
 			}
 		}
