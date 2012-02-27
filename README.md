@@ -13,7 +13,7 @@ were involved.
 
 Time: 8 hours.
 
-Result: Best App Award and NetArduino Award.
+Result: *Best App Award* and *NetArduino Award*.
 
 Available technologies
 ----------------------
@@ -25,14 +25,14 @@ Our prototype
 
 We developed a social intrusion decection system. Steps:
 
-. A thief passes by a sensor connected to an Arduino, connected to an Android device
-. The sensor notifies the Android that snaps pictures of the walking robber
-. Pictures are uploaded to a remote server, where an animated GIF of the thief is created
-. The GIF is published on the victim's Twitter account
-. By means of Tropo APIs: 
-	o phone calls are performed to the victim's neighbours to alert them
-	o SMSs are sent to other people, notifying them of the theft and asking for help
-. The victim's receives a push notification on his/her iPhone. He can then open the application to see the 
+* A thief passes by a sensor connected to an Arduino, connected to an Android device
+* The sensor notifies the Android that snaps pictures of the walking robber
+* Pictures are uploaded to a remote server, where an animated GIF of the thief is created
+* The GIF is published on the victim's Twitter account
+* By means of Tropo APIs: 
+	* phone calls are performed to the victim's neighbours to alert them
+	* SMSs are sent to other people, notifying them of the theft and asking for help
+* The victim's receives a push notification on his/her iPhone. He can then open the application to see the 
   pictures of the robber.
 
 Licence
