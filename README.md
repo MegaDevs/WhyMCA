@@ -24,14 +24,15 @@ Our prototype
 -------------
 
 We developed a social intrusion decection system. Steps:
-* A thief passes by a sensor connected to an Arduino, connected to an Android device
-* The sensor notifies the Android that snaps pictures of the walking robber
-* Pictures are uploaded to a remote server, where an animated GIF of the thief is created
-* The GIF is published on the victim's Twitter account
-* By means of Tropo APIs: 
+
+. A thief passes by a sensor connected to an Arduino, connected to an Android device
+. The sensor notifies the Android that snaps pictures of the walking robber
+. Pictures are uploaded to a remote server, where an animated GIF of the thief is created
+. The GIF is published on the victim's Twitter account
+. By means of Tropo APIs: 
 	o phone calls are performed to the victim's neighbours to alert them
 	o SMSs are sent to other people, notifying them of the theft and asking for help
-* The victim's receives a push notification on his/her iPhone. He can then open the application to see the 
+. The victim's receives a push notification on his/her iPhone. He can then open the application to see the 
   pictures of the robber.
 
 Licence
@@ -41,8 +42,8 @@ This code is licensed under the 2-clause BSD license ("Simplified BSD License" o
 Copyright 2012 Megadevs. All rights reserved.
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-2. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-3. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 
 THIS SOFTWARE IS PROVIDED BY MEGADEVS ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL JONATHAN WIGHT OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
