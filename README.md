@@ -13,7 +13,7 @@ were involved.
 
 Time: 8 hours.
 
-Result: *Best App Award* and *NetArduino Award*.
+Result: *Best App Award* and *Netduino Award*.
 
 Available technologies
 ----------------------
