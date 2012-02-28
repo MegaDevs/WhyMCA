@@ -32,7 +32,7 @@ We developed a social intrusion decection system. Steps:
 * By means of Tropo APIs: 
 	* phone calls are performed to the victim's neighbours to alert them
 	* SMSs are sent to other people, notifying them of the theft and asking for help
-* The victim's receives a push notification on his/her iPhone. He can then open the application to see the 
+* The victim receives a push notification on his/her iPhone. He can then open the application to see the 
   pictures of the robber.
 
 Licence
